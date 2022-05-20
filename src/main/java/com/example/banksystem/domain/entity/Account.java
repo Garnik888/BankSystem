@@ -1,8 +1,6 @@
 package com.example.banksystem.domain.entity;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "account")
@@ -16,8 +14,10 @@ public class Account {
     @Column(name = "account_balance", nullable = false)
     private String accountBalance;
 
-    @Embedded
-    private Issuer issuer = new Issuer();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_issuer_branch", nullable = false,
+            foreignKey = @ForeignKey(name = "issuer_branch_account_fk"))
+    private IssuerBranch issuerBranch;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_card_holder", nullable = false,

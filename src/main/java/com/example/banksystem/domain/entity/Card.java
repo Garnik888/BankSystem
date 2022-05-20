@@ -30,8 +30,11 @@ public class Card {
     private CardStatus cardStatus;
     @Column(name = "pin", nullable = false, length = 4)
     private String PIN;
-    @Embedded
-    private Issuer issuer = new Issuer();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_issuer_branch", nullable = false,
+            foreignKey = @ForeignKey(name = "issuer_branch_card_fk"))
+    private IssuerBranch issuerBranch;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_card_holder", nullable = false,
