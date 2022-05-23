@@ -22,7 +22,6 @@ public class Card {
     @Column(name = "balance", nullable = false)
     private String balance;
     @Column(name = "card_number", nullable = false, unique = true, length = 16)
-    @Pattern(regexp = "\\d{4}-\\d{4}-\\d{4}-\\d{4}",message = "xxxx-xxxx-xxxx-xxxx")
     private String cardNumber;
     @Column(name = "expiration_date", nullable = false)
     private LocalDate expirationDate;
