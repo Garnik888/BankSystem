@@ -18,6 +18,7 @@ public class Address {
     @Column(name = "country", nullable = false, length = 30)
     private String country;
 
-    @OneToMany(mappedBy = "address", cascade = {CascadeType.PERSIST})
-    private List<CardHolder> cardHolders = new ArrayList<>();
+    @OneToMany(mappedBy = "address", cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
+    private List<CardHolder> cardHolders =new ArrayList<>();
+
 }

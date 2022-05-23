@@ -18,10 +18,10 @@ public class CardHolder {
     @Column(name = "age", nullable = false)
     private Integer age;
 
-    @OneToMany(mappedBy = "cardHolder", cascade = {CascadeType.PERSIST})
+    @OneToMany(mappedBy = "cardHolder", cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
     private List<Card> cardList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "cardHolder", cascade = {CascadeType.PERSIST})
+    @OneToMany(mappedBy = "cardHolder", cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
     private List<Account> accountList = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)

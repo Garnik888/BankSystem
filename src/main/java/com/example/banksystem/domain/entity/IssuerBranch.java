@@ -21,9 +21,9 @@ public class IssuerBranch {
     @Column(name = "issuer_type", nullable = false)
     private IssuerType issuerType;
 
-    @OneToMany(mappedBy = "issuerBranch", cascade = {CascadeType.PERSIST})
+    @OneToMany(mappedBy = "issuerBranch", cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
     private List<Account> accountList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "issuerBranch", cascade = {CascadeType.PERSIST})
+    @OneToMany(mappedBy = "issuerBranch", cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
     private List<Card> cardList = new ArrayList<>();
 }
