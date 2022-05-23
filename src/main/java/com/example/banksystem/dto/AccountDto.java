@@ -1,7 +1,5 @@
 package com.example.banksystem.dto;
 
-import javax.persistence.Column;
-
 public class AccountDto {
 
     private String IBAN;
