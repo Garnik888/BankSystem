@@ -23,34 +23,51 @@ public class IssuerBranchService {
 
     public IssuerBranchDto save(IssuerBranchDto issuerBranchDto) {
 
-        IssuerBranch issuerBranch = modelMapper.map(issuerBranchDto, IssuerBranch.class);
+        IssuerBranch issuerBranch = this.modelMapper.map(issuerBranchDto, IssuerBranch.class);
 
-        return modelMapper.map(issuerBranchRepo.save(issuerBranch), IssuerBranchDto.class);
+        return this.modelMapper.map(this.issuerBranchRepo.save(issuerBranch), IssuerBranchDto.class);
     }
 
     public IssuerBranchDto getIssuerById(Long id) {
 
-        Optional<IssuerBranch> issuerBranch = issuerBranchRepo.findById(id);
+        Optional<IssuerBranch> issuerBranch = this.issuerBranchRepo.findById(id);
 
         if (issuerBranch.isPresent()) {
 
-            return null;
+            return this.modelMapper.map(issuerBranch, IssuerBranchDto.class);
         }
 
-        return modelMapper.map(issuerBranch, IssuerBranchDto.class);
+        return null;
     }
 
     public IssuerBranchDto updateIssuerBranchById(Long id, IssuerBranchDto issuerBranchDto) {
 
-        IssuerBranch issuerBranch = modelMapper.map(issuerBranchRepo.findById(id), IssuerBranch.class);
-        if (issuerBranch == null) {
-            return null;
+        Optional<IssuerBranch> issuerBranchUpdate = issuerBranchRepo.findById(id);
+
+        IssuerBranch issuerBranch = modelMapper.map(issuerBranchUpdate, IssuerBranch.class);
+
+        if (issuerBranchUpdate.isPresent()) {
+            issuerBranch.setBankName(issuerBranchDto.getBankName());
+            issuerBranch.setBankCode(issuerBranchDto.getBankCode());
+            issuerBranch.setIssuerType(issuerBranchDto.getIssuerType());
+
+            return modelMapper.map(issuerBranchRepo.save(issuerBranch), IssuerBranchDto.class);
         }
 
-        issuerBranch.setBankName(issuerBranchDto.getBankName());
-        issuerBranch.setBankCode(issuerBranchDto.getBankCode());
-        issuerBranch.setIssuerType(issuerBranchDto.getIssuerType());
+        return null;
+    }
 
-        return modelMapper.map(issuerBranchRepo.save(issuerBranch), IssuerBranchDto.class);
+    public IssuerBranchDto deleteIssuerBranchById(Long id) {
+
+        Optional<IssuerBranch> issuerBranchDelete = issuerBranchRepo.findById(id);
+        IssuerBranch issuerBranch = modelMapper.map(issuerBranchDelete, IssuerBranch.class);
+
+        if (issuerBranchDelete.isPresent()) {
+
+            issuerBranchRepo.delete(issuerBranch);
+            return modelMapper.map(issuerBranch, IssuerBranchDto.class);
+        }
+
+        return null;
     }
 }

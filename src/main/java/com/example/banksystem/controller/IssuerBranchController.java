@@ -25,7 +25,7 @@ public class IssuerBranchController {
 
         IssuerBranchDto issuerBranchDtoSave = issuerBranchService.save(issuerBranchDto);
 
-        if(issuerBranchDtoSave == null) {
+        if (issuerBranchDtoSave == null) {
 
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
@@ -38,9 +38,9 @@ public class IssuerBranchController {
 
         IssuerBranchDto issuerBranchDto = issuerBranchService.getIssuerById(id);
 
-        if(issuerBranchDto != null) {
+        if (issuerBranchDto != null) {
 
-           return ResponseEntity.ok(issuerBranchDto);
+            return ResponseEntity.ok(issuerBranchDto);
         }
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).
@@ -53,7 +53,21 @@ public class IssuerBranchController {
 
         IssuerBranchDto issuerBranchDtoUpdate = issuerBranchService.updateIssuerBranchById(id, issuerBranchDto);
 
-        if(issuerBranchDtoUpdate != null) {
+        if (issuerBranchDtoUpdate != null) {
+
+            return ResponseEntity.ok(issuerBranchDtoUpdate);
+        }
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).
+                body("Issuer branch with given properties does not exist.");
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteIssuerBranchById(@PathVariable("id") Long id) {
+
+        IssuerBranchDto issuerBranchDto = issuerBranchService.deleteIssuerBranchById(id);
+
+        if (issuerBranchDto != null) {
 
             return ResponseEntity.ok(issuerBranchDto);
         }
@@ -61,5 +75,4 @@ public class IssuerBranchController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).
                 body("Issuer branch with given properties does not exist.");
     }
-
 }
