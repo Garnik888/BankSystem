@@ -9,7 +9,8 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "issuer_branche")
+@Table(name = "issuer_branche",
+uniqueConstraints = @UniqueConstraint(columnNames = {"bank_name", "bank_code"}))
 public class IssuerBranch {
 
     @Id
@@ -19,6 +20,7 @@ public class IssuerBranch {
     private String bankName;
     @Column(name = "bank_code", nullable = false)
     private String bankCode;
+    @Enumerated(EnumType.STRING)
     @Column(name = "issuer_type", nullable = false)
     private IssuerType issuerType;
 
@@ -29,6 +31,12 @@ public class IssuerBranch {
     private List<Card> cardList = new ArrayList<>();
 
     public IssuerBranch() {
+    }
+
+    public IssuerBranch(String bankName, String bankCode, IssuerType issuerType) {
+        this.bankName = bankName;
+        this.bankCode = bankCode;
+        this.issuerType = issuerType;
     }
 
     public Long getId() {

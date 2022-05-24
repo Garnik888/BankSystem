@@ -2,8 +2,6 @@ package com.example.banksystem.dto;
 
 import com.example.banksystem.domain.enum_types.IssuerType;
 
-import javax.persistence.Column;
-
 public class IssuerBranchDto {
 
     private String bankName;
