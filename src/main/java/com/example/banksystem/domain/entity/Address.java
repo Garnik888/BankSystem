@@ -6,7 +6,8 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "address")
+@Table(name = "address",
+uniqueConstraints = @UniqueConstraint(columnNames = {"country", "city", "street"}))
 public class Address {
 
     @Id

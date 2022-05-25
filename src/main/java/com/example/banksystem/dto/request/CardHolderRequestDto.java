@@ -1,5 +1,7 @@
 package com.example.banksystem.dto.request;
 
+import com.example.banksystem.domain.entity.Address;
+
 import javax.persistence.Column;
 
 public class CardHolderRequestDto {
@@ -9,6 +11,7 @@ public class CardHolderRequestDto {
     private String lastName;
     private Integer age;
 
+    private Address AddressRequestDto;
     public CardHolderRequestDto() {
 
     }
