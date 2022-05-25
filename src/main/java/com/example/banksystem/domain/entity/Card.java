@@ -136,19 +136,6 @@ public class Card {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Card card = (Card) o;
-        return Objects.equals(id, card.id) && cardType == card.cardType && balanceType == card.balanceType && Objects.equals(balance, card.balance) && Objects.equals(cardNumber, card.cardNumber) && Objects.equals(expirationDate, card.expirationDate) && Objects.equals(CVC, card.CVC) && cardStatus == card.cardStatus && Objects.equals(PIN, card.PIN) && Objects.equals(issuerBranch, card.issuerBranch) && Objects.equals(cardHolder, card.cardHolder);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, cardType, balanceType, balance, cardNumber, expirationDate, CVC, cardStatus, PIN, issuerBranch, cardHolder);
-    }
-
-    @Override
     public String toString() {
         return "Card{" +
                 "id=" + id +

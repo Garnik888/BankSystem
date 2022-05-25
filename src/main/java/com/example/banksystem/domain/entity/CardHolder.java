@@ -25,12 +25,18 @@ public class CardHolder {
     @OneToMany(mappedBy = "cardHolder", cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
     private List<Account> accountList = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_address", nullable = false,
-            foreignKey = @ForeignKey(name = "address_card_holder_fk"))
+    @ManyToOne(fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE})
+    @JoinColumn(name = "address_id",foreignKey = @ForeignKey(name = "card_holder_address_fk"))
     private Address address;
 
     public CardHolder() {
+    }
+
+    public CardHolder(String firstName, String lastName, Integer age) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
     }
 
     public Long getId() {
@@ -87,19 +93,6 @@ public class CardHolder {
 
     public void setAddress(Address address) {
         this.address = address;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        CardHolder that = (CardHolder) o;
-        return Objects.equals(id, that.id) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(age, that.age) && Objects.equals(cardList, that.cardList) && Objects.equals(accountList, that.accountList) && Objects.equals(address, that.address);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, firstName, lastName, age, cardList, accountList, address);
     }
 
     @Override

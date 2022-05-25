@@ -22,7 +22,7 @@ public class AddressController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createAddress(@RequestBody AddressRequestDto addressRequestDto) {
+    public ResponseEntity<AddressResponseDto> createAddress(@RequestBody AddressRequestDto addressRequestDto) {
 
         AddressResponseDto addressResponseDto = addressService.saveAddress(addressRequestDto);
 

@@ -11,7 +11,6 @@ public class CardHolderRequestDto {
     private String lastName;
     private Integer age;
 
-    private Address AddressRequestDto;
     public CardHolderRequestDto() {
 
     }

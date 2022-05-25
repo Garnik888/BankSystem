@@ -6,8 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "address",
-uniqueConstraints = @UniqueConstraint(columnNames = {"country", "city", "street"}))
+@Table(name = "address")
 public class Address {
 
     @Id
@@ -19,12 +18,19 @@ public class Address {
     private String city;
     @Column(name = "country", nullable = false, length = 30)
     private String country;
+    @OneToMany(mappedBy = "address", fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE})
+    private List<CardHolder> cardHolders = new ArrayList<>();
 
-    @OneToMany(mappedBy = "address", cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
-    private List<CardHolder> cardHolders =new ArrayList<>();
 
     public Address() {
 
+    }
+
+    public Address(String street, String city, String country) {
+        this.street = street;
+        this.city = city;
+        this.country = country;
     }
 
     public Long getId() {
@@ -65,19 +71,6 @@ public class Address {
 
     public void setCardHolders(List<CardHolder> cardHolders) {
         this.cardHolders = cardHolders;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Address address = (Address) o;
-        return Objects.equals(id, address.id) && Objects.equals(street, address.street) && Objects.equals(city, address.city) && Objects.equals(country, address.country) && Objects.equals(cardHolders, address.cardHolders);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, street, city, country, cardHolders);
     }
 
     @Override

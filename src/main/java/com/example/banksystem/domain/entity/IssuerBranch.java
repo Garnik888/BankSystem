@@ -88,19 +88,6 @@ public class IssuerBranch {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        IssuerBranch that = (IssuerBranch) o;
-        return Objects.equals(id, that.id) && Objects.equals(bankName, that.bankName) && Objects.equals(bankCode, that.bankCode) && issuerType == that.issuerType && Objects.equals(accountList, that.accountList) && Objects.equals(cardList, that.cardList);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, bankName, bankCode, issuerType, accountList, cardList);
-    }
-
-    @Override
     public String toString() {
         return "IssuerBranch{" +
                 "id=" + id +
