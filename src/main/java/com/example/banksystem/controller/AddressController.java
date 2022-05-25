@@ -1,8 +1,10 @@
 package com.example.banksystem.controller;
 
 import com.example.banksystem.dto.request.AddressRequestDto;
+import com.example.banksystem.dto.request.CardHolderAddressRequestDto;
 import com.example.banksystem.dto.request.IssuerBranchRequestDto;
 import com.example.banksystem.dto.response.AddressResponseDto;
+import com.example.banksystem.dto.response.CardHolderAddressResponseDto;
 import com.example.banksystem.dto.response.IssuerBranchResponseDto;
 import com.example.banksystem.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +24,10 @@ public class AddressController {
     }
 
     @PostMapping
-    public ResponseEntity<AddressResponseDto> createAddress(@RequestBody AddressRequestDto addressRequestDto) {
+    public ResponseEntity<?> createAddress(@RequestBody AddressRequestDto addressRequestDto) {
 
-        AddressResponseDto addressResponseDto = addressService.saveAddress(addressRequestDto);
+        AddressResponseDto addressResponseDto =
+                addressService.saveAddress(addressRequestDto);
 
         if (addressResponseDto == null) {
 
@@ -62,5 +65,19 @@ public class AddressController {
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).
                 body("Issuer branch with given properties does not exist.");
+    }
+
+    @GetMapping
+    public ResponseEntity<?> getAddressRequestDto(@RequestBody AddressRequestDto addressRequestDto) {
+
+        AddressRequestDto addressRequestDtoGet = addressService.getAddressRequestDto(addressRequestDto);
+
+        if (addressRequestDtoGet != null) {
+
+            return ResponseEntity.ok(addressRequestDtoGet);
+        }
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).
+                body("Address branch with given properties does not found.");
     }
 }
