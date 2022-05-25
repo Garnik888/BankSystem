@@ -1,19 +1,17 @@
-package com.example.banksystem.dto;
+package com.example.banksystem.dto.response;
 
-import javax.persistence.Column;
-
-public class CardHolderDto {
+public class CardHolderResponseDto {
 
 
     private String firstName;
     private String lastName;
     private Integer age;
 
-    public CardHolderDto() {
+    public CardHolderResponseDto() {
 
     }
 
-    public CardHolderDto(String firstName, String lastName, Integer age) {
+    public CardHolderResponseDto(String firstName, String lastName, Integer age) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;

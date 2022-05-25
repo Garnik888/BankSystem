@@ -1,7 +1,8 @@
 package com.example.banksystem.service;
 
 import com.example.banksystem.domain.entity.IssuerBranch;
-import com.example.banksystem.dto.IssuerBranchDto;
+import com.example.banksystem.dto.request.IssuerBranchRequestDto;
+import com.example.banksystem.dto.response.IssuerBranchResponseDto;
 import com.example.banksystem.repository.IssuerBranchRepo;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,43 +22,43 @@ public class IssuerBranchService {
         this.issuerBranchRepo = issuerBranchRepo;
     }
 
-    public IssuerBranchDto save(IssuerBranchDto issuerBranchDto) {
+    public IssuerBranchResponseDto save(IssuerBranchRequestDto issuerBranchRequestDto) {
 
-        IssuerBranch issuerBranch = this.modelMapper.map(issuerBranchDto, IssuerBranch.class);
+        IssuerBranch issuerBranch = this.modelMapper.map(issuerBranchRequestDto, IssuerBranch.class);
 
-        return this.modelMapper.map(this.issuerBranchRepo.save(issuerBranch), IssuerBranchDto.class);
+        return this.modelMapper.map(this.issuerBranchRepo.save(issuerBranch), IssuerBranchResponseDto.class);
     }
 
-    public IssuerBranchDto getIssuerById(Long id) {
+    public IssuerBranchResponseDto getIssuerById(Long id) {
 
         Optional<IssuerBranch> issuerBranch = this.issuerBranchRepo.findById(id);
 
         if (issuerBranch.isPresent()) {
 
-            return this.modelMapper.map(issuerBranch, IssuerBranchDto.class);
+            return this.modelMapper.map(issuerBranch, IssuerBranchResponseDto.class);
         }
 
         return null;
     }
 
-    public IssuerBranchDto updateIssuerBranchById(Long id, IssuerBranchDto issuerBranchDto) {
+    public IssuerBranchResponseDto updateIssuerBranchById(Long id, IssuerBranchRequestDto issuerBranchRequestDto) {
 
         Optional<IssuerBranch> issuerBranchUpdate = issuerBranchRepo.findById(id);
 
         IssuerBranch issuerBranch = modelMapper.map(issuerBranchUpdate, IssuerBranch.class);
 
         if (issuerBranchUpdate.isPresent()) {
-            issuerBranch.setBankName(issuerBranchDto.getBankName());
-            issuerBranch.setBankCode(issuerBranchDto.getBankCode());
-            issuerBranch.setIssuerType(issuerBranchDto.getIssuerType());
+            issuerBranch.setBankName(issuerBranchRequestDto.getBankName());
+            issuerBranch.setBankCode(issuerBranchRequestDto.getBankCode());
+            issuerBranch.setIssuerType(issuerBranchRequestDto.getIssuerType());
 
-            return modelMapper.map(issuerBranchRepo.save(issuerBranch), IssuerBranchDto.class);
+            return modelMapper.map(issuerBranchRepo.save(issuerBranch), IssuerBranchResponseDto.class);
         }
 
         return null;
     }
 
-    public IssuerBranchDto deleteIssuerBranchById(Long id) {
+    public IssuerBranchResponseDto deleteIssuerBranchById(Long id) {
 
         Optional<IssuerBranch> issuerBranchDelete = issuerBranchRepo.findById(id);
         IssuerBranch issuerBranch = modelMapper.map(issuerBranchDelete, IssuerBranch.class);
@@ -65,7 +66,7 @@ public class IssuerBranchService {
         if (issuerBranchDelete.isPresent()) {
 
             issuerBranchRepo.delete(issuerBranch);
-            return modelMapper.map(issuerBranch, IssuerBranchDto.class);
+            return modelMapper.map(issuerBranch, IssuerBranchResponseDto.class);
         }
 
         return null;

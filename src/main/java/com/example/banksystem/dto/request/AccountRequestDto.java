@@ -1,15 +1,15 @@
-package com.example.banksystem.dto;
+package com.example.banksystem.dto.request;
 
-public class AccountDto {
+public class AccountRequestDto {
 
     private String IBAN;
     private String accountBalance;
 
-    public AccountDto() {
+    public AccountRequestDto() {
 
     }
 
-    public AccountDto(String IBAN, String accountBalance) {
+    public AccountRequestDto(String IBAN, String accountBalance) {
         this.IBAN = IBAN;
         this.accountBalance = accountBalance;
     }

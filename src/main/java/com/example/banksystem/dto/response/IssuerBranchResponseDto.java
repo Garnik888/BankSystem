@@ -1,18 +1,18 @@
-package com.example.banksystem.dto;
+package com.example.banksystem.dto.response;
 
 import com.example.banksystem.domain.enum_types.IssuerType;
 
-public class IssuerBranchDto {
+public class IssuerBranchResponseDto {
 
     private String bankName;
     private String bankCode;
     private IssuerType issuerType;
 
-    public IssuerBranchDto() {
+    public IssuerBranchResponseDto() {
 
     }
 
-    public IssuerBranchDto(String bankName, String bankCode, IssuerType issuerType) {
+    public IssuerBranchResponseDto(String bankName, String bankCode, IssuerType issuerType) {
         this.bankName = bankName;
         this.bankCode = bankCode;
         this.issuerType = issuerType;

@@ -1,7 +1,6 @@
 package com.example.banksystem.service;
 
-import com.example.banksystem.dto.AddressDto;
-import com.example.banksystem.mappers.ModelMapperConfig;
+
 import com.example.banksystem.repository.AddressRepo;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,5 +19,4 @@ public class AddressService {
         this.modelMapper = modelMapper;
         this.addressRepo = addressRepo;
     }
-
 }

@@ -1,6 +1,7 @@
 package com.example.banksystem.controller;
 
-import com.example.banksystem.dto.IssuerBranchDto;
+import com.example.banksystem.dto.request.IssuerBranchRequestDto;
+import com.example.banksystem.dto.response.IssuerBranchResponseDto;
 import com.example.banksystem.service.IssuerBranchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,26 +22,26 @@ public class IssuerBranchController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createIssuerBranch(@RequestBody IssuerBranchDto issuerBranchDto) {
+    public ResponseEntity<?> createIssuerBranch(@RequestBody IssuerBranchRequestDto issuerBranchRequestDto) {
 
-        IssuerBranchDto issuerBranchDtoSave = issuerBranchService.save(issuerBranchDto);
+        IssuerBranchResponseDto issuerBranchResponseDto = issuerBranchService.save(issuerBranchRequestDto);
 
-        if (issuerBranchDtoSave == null) {
+        if (issuerBranchResponseDto == null) {
 
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
 
-        return ResponseEntity.ok(issuerBranchDtoSave);
+        return ResponseEntity.ok(issuerBranchResponseDto);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getIssuerBranchById(@PathVariable("id") Long id) {
 
-        IssuerBranchDto issuerBranchDto = issuerBranchService.getIssuerById(id);
+        IssuerBranchResponseDto issuerBranchResponseDto = issuerBranchService.getIssuerById(id);
 
-        if (issuerBranchDto != null) {
+        if (issuerBranchResponseDto != null) {
 
-            return ResponseEntity.ok(issuerBranchDto);
+            return ResponseEntity.ok(issuerBranchResponseDto);
         }
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).
@@ -49,13 +50,14 @@ public class IssuerBranchController {
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateIssuerBranchById(@PathVariable("id") Long id,
-                                                    @RequestBody IssuerBranchDto issuerBranchDto) {
+                                                    @RequestBody IssuerBranchRequestDto issuerBranchRequestDto) {
 
-        IssuerBranchDto issuerBranchDtoUpdate = issuerBranchService.updateIssuerBranchById(id, issuerBranchDto);
+        IssuerBranchResponseDto issuerBranchResponseDto = issuerBranchService.
+                updateIssuerBranchById(id, issuerBranchRequestDto);
 
-        if (issuerBranchDtoUpdate != null) {
+        if (issuerBranchResponseDto != null) {
 
-            return ResponseEntity.ok(issuerBranchDtoUpdate);
+            return ResponseEntity.ok(issuerBranchResponseDto);
         }
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).
@@ -65,11 +67,11 @@ public class IssuerBranchController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteIssuerBranchById(@PathVariable("id") Long id) {
 
-        IssuerBranchDto issuerBranchDto = issuerBranchService.deleteIssuerBranchById(id);
+        IssuerBranchResponseDto issuerBranchResponseDto = issuerBranchService.deleteIssuerBranchById(id);
 
-        if (issuerBranchDto != null) {
+        if (issuerBranchResponseDto != null) {
 
-            return ResponseEntity.ok(issuerBranchDto);
+            return ResponseEntity.ok(issuerBranchResponseDto);
         }
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).

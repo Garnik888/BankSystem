@@ -1,13 +1,12 @@
-package com.example.banksystem.dto;
+package com.example.banksystem.dto.response;
 
 import com.example.banksystem.domain.enum_types.BalanceType;
 import com.example.banksystem.domain.enum_types.CardStatus;
 import com.example.banksystem.domain.enum_types.CardType;
 
-import javax.persistence.Column;
 import java.time.LocalDate;
 
-public class CardDto {
+public class CardResponseDto {
 
     private CardType cardType;
     private BalanceType balanceType;
@@ -18,11 +17,11 @@ public class CardDto {
     private CardStatus cardStatus;
     private String PIN;
 
-    public CardDto() {
+    public CardResponseDto() {
 
     }
 
-    public CardDto(CardType cardType, BalanceType balanceType,
+    public CardResponseDto(CardType cardType, BalanceType balanceType,
                    String balance, String cardNumber,
                    LocalDate expirationDate, String CVC,
                    CardStatus cardStatus, String PIN) {

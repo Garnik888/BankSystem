@@ -1,18 +1,16 @@
-package com.example.banksystem.dto;
+package com.example.banksystem.dto.response;
 
-import javax.persistence.Column;
-
-public class AddressDto {
+public class AddressResponseDto {
 
     private String street;
     private String city;
     private String country;
 
-    public AddressDto() {
+    public AddressResponseDto() {
 
     }
 
-    public AddressDto(String street, String city, String country) {
+    public AddressResponseDto(String street, String city, String country) {
         this.street = street;
         this.city = city;
         this.country = country;
