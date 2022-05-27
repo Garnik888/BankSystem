@@ -52,4 +52,17 @@ public class CardHolderController {
                 body("Card holder with given properties does not exist.");
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteCardHolder (@PathVariable("id") Long id) {
+
+        CardHolderResponseDto cardHolderResponseDto = cardHolderService.deleteCardHolder(id);
+
+        if(cardHolderResponseDto != null) {
+
+            return ResponseEntity.ok(cardHolderResponseDto);
+        }
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).
+                body("Card holder with given properties does not exist.");
+    }
 }

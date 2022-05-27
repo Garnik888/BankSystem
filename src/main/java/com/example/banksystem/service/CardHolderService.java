@@ -78,6 +78,20 @@ public class CardHolderService {
         return null;
     }
 
+    public CardHolderResponseDto deleteCardHolder(Long id) {
+
+        Optional<CardHolder> cardHolderGet = cardHolderRepo.findById(id);
+        CardHolder cardHolder = modelMapper.map(cardHolderGet, CardHolder.class);
+
+        if(cardHolderGet.isPresent()) {
+
+            cardHolderRepo.delete(cardHolder);
+            return modelMapper.map(cardHolder, CardHolderResponseDto.class);
+        }
+
+        return null;
+    }
+
     private void getAddressAndSaveInCardHolder(CardHolderAddressRequestDto cardHolderAddressRequestDto,
                                                CardHolderAddressResponseDto cardHolderAddressResponseDto,
                                                CardHolder cardHolderUpdate) {
