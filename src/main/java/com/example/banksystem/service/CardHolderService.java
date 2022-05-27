@@ -1,18 +1,16 @@
 package com.example.banksystem.service;
 
 import com.example.banksystem.domain.entity.Address;
-import com.example.banksystem.domain.entity.Card;
 import com.example.banksystem.domain.entity.CardHolder;
 import com.example.banksystem.dto.request.AddressRequestDto;
 import com.example.banksystem.dto.request.CardHolderAddressRequestDto;
-import com.example.banksystem.dto.request.CardHolderRequestDto;
+import com.example.banksystem.dto.response.AddressResponseDto;
 import com.example.banksystem.dto.response.CardHolderAddressResponseDto;
 import com.example.banksystem.dto.response.CardHolderResponseDto;
 import com.example.banksystem.repository.AddressRepo;
 import com.example.banksystem.repository.CardHolderRepo;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -35,16 +33,39 @@ public class CardHolderService {
     }
 
 
-    public CardHolderResponseDto saveCardHolder(CardHolderAddressRequestDto cardHolderAddressRequestDto) {
+    public CardHolderAddressResponseDto saveCardHolder(
+            CardHolderAddressRequestDto cardHolderAddressRequestDto) {
 
-        CardHolder cardHolder = modelMapper.map(cardHolderAddressRequestDto.getCardHolderRequestDto(),
-                CardHolder.class);
-        Address addressSave = modelMapper.map(cardHolderAddressRequestDto.getAddressRequestDto(),
-                Address.class);
+        CardHolderAddressResponseDto cardHolderAddressResponseDto = new CardHolderAddressResponseDto();
+
+        CardHolder cardHolder = modelMapper.map(cardHolderAddressRequestDto.getCardHolderRequestDto()
+                , CardHolder.class);
+
+        Optional<Address> addressGet =
+                addressService.getAddressRequestDto(cardHolderAddressRequestDto.getAddressRequestDto());
 
 
-        addressRepo.save(addressSave);
-        CardHolder save = cardHolderRepo.save(cardHolder);
-        return modelMapper.map(save, CardHolderResponseDto.class);
+        if (addressGet.isEmpty()) {
+
+            Address addressSave = addressRepo.save(modelMapper.map(cardHolderAddressRequestDto.
+
+                    getAddressRequestDto(), Address.class));
+
+            cardHolder.setAddress(addressSave);
+
+            cardHolderAddressResponseDto.setAddressResponseDto(
+                    modelMapper.map(addressSave, AddressResponseDto.class));
+        } else {
+
+            cardHolder.setAddress(modelMapper.map(addressGet, Address.class));
+
+            cardHolderAddressResponseDto.setAddressResponseDto(
+                    modelMapper.map(addressGet, AddressResponseDto.class));
+        }
+
+        cardHolderAddressResponseDto.setCardHolderResponseDto(
+                modelMapper.map(cardHolderRepo.save(cardHolder), CardHolderResponseDto.class));
+
+        return cardHolderAddressResponseDto;
     }
 }

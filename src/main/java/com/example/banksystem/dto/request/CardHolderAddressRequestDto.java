@@ -1,8 +1,12 @@
 package com.example.banksystem.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class CardHolderAddressRequestDto {
 
+    @JsonProperty("cardHolder")
     CardHolderRequestDto cardHolderRequestDto;
+    @JsonProperty("address")
     AddressRequestDto addressRequestDto;
 
     public CardHolderAddressRequestDto() {

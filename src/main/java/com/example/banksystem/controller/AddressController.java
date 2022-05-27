@@ -1,5 +1,6 @@
 package com.example.banksystem.controller;
 
+import com.example.banksystem.domain.entity.Address;
 import com.example.banksystem.dto.request.AddressRequestDto;
 import com.example.banksystem.dto.request.CardHolderAddressRequestDto;
 import com.example.banksystem.dto.request.IssuerBranchRequestDto;
@@ -7,10 +8,13 @@ import com.example.banksystem.dto.response.AddressResponseDto;
 import com.example.banksystem.dto.response.CardHolderAddressResponseDto;
 import com.example.banksystem.dto.response.IssuerBranchResponseDto;
 import com.example.banksystem.service.AddressService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/address")
@@ -18,9 +22,12 @@ public class AddressController {
 
     private final AddressService addressService;
 
+    private final ModelMapper modelMapper;
+
     @Autowired
-    public AddressController(AddressService addressService) {
+    public AddressController(AddressService addressService, ModelMapper modelMapper) {
         this.addressService = addressService;
+        this.modelMapper = modelMapper;
     }
 
     @PostMapping
@@ -39,7 +46,7 @@ public class AddressController {
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateAddressById(@PathVariable("id") Long id,
-                                                    @RequestBody AddressRequestDto addressRequestDto) {
+                                               @RequestBody AddressRequestDto addressRequestDto) {
 
         AddressResponseDto addressResponseDto = addressService.
                 updateAddressById(id, addressRequestDto);
@@ -70,11 +77,13 @@ public class AddressController {
     @GetMapping
     public ResponseEntity<?> getAddressRequestDto(@RequestBody AddressRequestDto addressRequestDto) {
 
-        AddressRequestDto addressRequestDtoGet = addressService.getAddressRequestDto(addressRequestDto);
+        Optional<Address> address = addressService.getAddressRequestDto(addressRequestDto);
 
-        if (addressRequestDtoGet != null) {
+        AddressResponseDto addressGet = modelMapper.map(address, AddressResponseDto.class);
 
-            return ResponseEntity.ok(addressRequestDtoGet);
+        if (address.isPresent()) {
+
+            return ResponseEntity.ok(addressGet);
         }
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).

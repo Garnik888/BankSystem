@@ -1,11 +1,6 @@
 package com.example.banksystem.controller;
 
-import com.example.banksystem.domain.entity.Card;
-import com.example.banksystem.domain.entity.CardHolder;
-import com.example.banksystem.dto.request.AddressRequestDto;
 import com.example.banksystem.dto.request.CardHolderAddressRequestDto;
-import com.example.banksystem.dto.request.CardHolderRequestDto;
-import com.example.banksystem.dto.response.AddressResponseDto;
 import com.example.banksystem.dto.response.CardHolderAddressResponseDto;
 import com.example.banksystem.dto.response.CardHolderResponseDto;
 import com.example.banksystem.service.CardHolderService;
@@ -22,24 +17,27 @@ import org.springframework.web.bind.annotation.RestController;
 public class CardHolderController {
 
     private final CardHolderService cardHolderService;
-
     @Autowired
     public CardHolderController(CardHolderService cardHolderService) {
+
         this.cardHolderService = cardHolderService;
     }
+
+
+
 
     @PostMapping
     public ResponseEntity<?> createCardHolder(@RequestBody CardHolderAddressRequestDto
                                                           cardHolderAddressRequestDto) {
 
-        CardHolderResponseDto cardHolderResponseDto =
+        CardHolderAddressResponseDto holderResponseDto =
                 cardHolderService.saveCardHolder(cardHolderAddressRequestDto);
 
-        if (cardHolderResponseDto == null) {
+        if (holderResponseDto == null) {
 
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
 
-        return ResponseEntity.ok(cardHolderResponseDto);
+        return ResponseEntity.ok(holderResponseDto);
     }
 }

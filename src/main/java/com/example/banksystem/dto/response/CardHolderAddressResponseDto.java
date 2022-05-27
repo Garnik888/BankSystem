@@ -2,10 +2,13 @@ package com.example.banksystem.dto.response;
 
 import com.example.banksystem.dto.request.AddressRequestDto;
 import com.example.banksystem.dto.request.CardHolderRequestDto;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class CardHolderAddressResponseDto {
 
+    @JsonProperty("cardHolder")
     CardHolderResponseDto cardHolderResponseDto;
+    @JsonProperty("address")
     AddressResponseDto addressResponseDto;
 
     public CardHolderAddressResponseDto() {

@@ -24,10 +24,12 @@ public class IssuerBranch {
     @Column(name = "issuer_type", nullable = false)
     private IssuerType issuerType;
 
-    @OneToMany(mappedBy = "issuerBranch", cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
+    @OneToMany(mappedBy = "issuerBranch",
+            cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE})
     private List<Account> accountList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "issuerBranch", cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
+    @OneToMany(mappedBy = "issuerBranch",
+            cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE})
     private List<Card> cardList = new ArrayList<>();
 
     public IssuerBranch() {
