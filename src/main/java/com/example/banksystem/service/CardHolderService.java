@@ -4,6 +4,7 @@ import com.example.banksystem.domain.entity.Address;
 import com.example.banksystem.domain.entity.CardHolder;
 import com.example.banksystem.dto.request.AddressRequestDto;
 import com.example.banksystem.dto.request.CardHolderAddressRequestDto;
+import com.example.banksystem.dto.request.CardHolderRequestDto;
 import com.example.banksystem.dto.response.AddressResponseDto;
 import com.example.banksystem.dto.response.CardHolderAddressResponseDto;
 import com.example.banksystem.dto.response.CardHolderResponseDto;
@@ -41,6 +42,45 @@ public class CardHolderService {
         CardHolder cardHolder = modelMapper.map(cardHolderAddressRequestDto.getCardHolderRequestDto()
                 , CardHolder.class);
 
+        getAddressAndSaveInCardHolder(cardHolderAddressRequestDto, cardHolderAddressResponseDto, cardHolder);
+
+        cardHolderAddressResponseDto.setCardHolderResponseDto(
+                modelMapper.map(cardHolderRepo.save(cardHolder), CardHolderResponseDto.class));
+
+        return cardHolderAddressResponseDto;
+    }
+
+    public CardHolderAddressResponseDto updateCardHolder(Long id, CardHolderAddressRequestDto
+            cardHolderAddressRequestDto) {
+
+        CardHolderAddressResponseDto cardHolderAddressResponseDto = new CardHolderAddressResponseDto();
+
+        Optional<CardHolder> cardHolderGet =cardHolderRepo.findById(id);
+        CardHolder cardHolderUpdate = modelMapper.map(cardHolderGet, CardHolder.class);
+
+
+        CardHolderRequestDto cardHolderRequestDto = cardHolderAddressRequestDto.getCardHolderRequestDto();
+
+        if (cardHolderGet.isPresent()) {
+
+            getAddressAndSaveInCardHolder(cardHolderAddressRequestDto, cardHolderAddressResponseDto,
+                    cardHolderUpdate);
+
+            cardHolderUpdate.setFirstName(cardHolderRequestDto.getFirstName());
+            cardHolderUpdate.setLastName(cardHolderRequestDto.getLastName());
+            cardHolderUpdate.setAge(cardHolderRequestDto.getAge());
+
+            cardHolderAddressResponseDto.setCardHolderResponseDto(
+                    modelMapper.map(cardHolderRepo.save(cardHolderUpdate), CardHolderResponseDto.class));
+            return cardHolderAddressResponseDto;
+        }
+
+        return null;
+    }
+
+    private void getAddressAndSaveInCardHolder(CardHolderAddressRequestDto cardHolderAddressRequestDto,
+                                               CardHolderAddressResponseDto cardHolderAddressResponseDto,
+                                               CardHolder cardHolderUpdate) {
         Optional<Address> addressGet =
                 addressService.getAddressRequestDto(cardHolderAddressRequestDto.getAddressRequestDto());
 
@@ -51,21 +91,17 @@ public class CardHolderService {
 
                     getAddressRequestDto(), Address.class));
 
-            cardHolder.setAddress(addressSave);
+            cardHolderUpdate.setAddress(addressSave);
 
             cardHolderAddressResponseDto.setAddressResponseDto(
                     modelMapper.map(addressSave, AddressResponseDto.class));
         } else {
 
-            cardHolder.setAddress(modelMapper.map(addressGet, Address.class));
+            cardHolderUpdate.setAddress(modelMapper.map(addressGet, Address.class));
 
             cardHolderAddressResponseDto.setAddressResponseDto(
                     modelMapper.map(addressGet, AddressResponseDto.class));
         }
-
-        cardHolderAddressResponseDto.setCardHolderResponseDto(
-                modelMapper.map(cardHolderRepo.save(cardHolder), CardHolderResponseDto.class));
-
-        return cardHolderAddressResponseDto;
     }
+
 }
