@@ -51,7 +51,21 @@ public class AccountService {
 
         getAndSaveAccount(accountRequestDto, account);
 
+        account.setIBAN(accountRequestDto.getIBAN());
+        account.setAccountBalance(accountRequestDto.getAccountBalance());
+
         return modelMapper.map(accountRepo.save(account), AccountResponseDto.class);
+    }
+
+    public AccountResponseDto deleteAccount(Long id) {
+
+        Optional<Account> accountGet = accountRepo.findById(id);
+
+        Account account = modelMapper.map(accountGet, Account.class);
+        AccountResponseDto accountResponseDto = modelMapper.map(account, AccountResponseDto.class);
+        accountRepo.delete(account);
+
+        return accountResponseDto;
     }
 
     private void getAndSaveAccount(AccountRequestDto accountRequestDto, Account account) throws Exception {

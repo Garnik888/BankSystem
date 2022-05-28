@@ -43,4 +43,17 @@ public class AccountController {
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Account is not found");
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteAccount(@PathVariable("id") Long id ) {
+
+        AccountResponseDto accountResponseDto = accountService.deleteAccount(id);
+
+        if(accountResponseDto != null) {
+
+            return ResponseEntity.ok(accountResponseDto);
+        }
+
+         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Account is not found");
+    }
 }
