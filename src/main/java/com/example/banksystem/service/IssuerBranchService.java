@@ -1,11 +1,14 @@
 package com.example.banksystem.service;
 
+import com.example.banksystem.domain.entity.Address;
 import com.example.banksystem.domain.entity.IssuerBranch;
+import com.example.banksystem.dto.request.AddressRequestDto;
 import com.example.banksystem.dto.request.IssuerBranchRequestDto;
 import com.example.banksystem.dto.response.IssuerBranchResponseDto;
 import com.example.banksystem.repository.IssuerBranchRepo;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -70,5 +73,14 @@ public class IssuerBranchService {
         }
 
         return null;
+    }
+
+    public Optional<IssuerBranch> getIssuerBranch(IssuerBranchRequestDto issuerBranchRequestDto) {
+
+        IssuerBranch issuerBranchGet = modelMapper.map(issuerBranchRequestDto, IssuerBranch.class);
+        Example<IssuerBranch> example = Example.of(issuerBranchGet);
+        Optional<IssuerBranch> issuerBranch = issuerBranchRepo.findOne(example);
+
+        return issuerBranch;
     }
 }

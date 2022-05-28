@@ -2,7 +2,6 @@ package com.example.banksystem.service;
 
 import com.example.banksystem.domain.entity.Address;
 import com.example.banksystem.domain.entity.CardHolder;
-import com.example.banksystem.dto.request.AddressRequestDto;
 import com.example.banksystem.dto.request.CardHolderAddressRequestDto;
 import com.example.banksystem.dto.request.CardHolderRequestDto;
 import com.example.banksystem.dto.response.AddressResponseDto;
@@ -12,6 +11,7 @@ import com.example.banksystem.repository.AddressRepo;
 import com.example.banksystem.repository.CardHolderRepo;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -92,11 +92,19 @@ public class CardHolderService {
         return null;
     }
 
+    public Optional<CardHolder> getCardHolder(CardHolderRequestDto cardHolderRequestDto) {
+
+        CardHolder cardHolderGet = modelMapper.map(cardHolderRequestDto, CardHolder.class);
+        Example<CardHolder> example = Example.of(cardHolderGet);
+        Optional<CardHolder> cardHolder = cardHolderRepo.findOne(example);
+
+        return cardHolder;
+    }
     private void getAddressAndSaveInCardHolder(CardHolderAddressRequestDto cardHolderAddressRequestDto,
                                                CardHolderAddressResponseDto cardHolderAddressResponseDto,
                                                CardHolder cardHolderUpdate) {
         Optional<Address> addressGet =
-                addressService.getAddressRequestDto(cardHolderAddressRequestDto.getAddressRequestDto());
+                addressService.getAddress(cardHolderAddressRequestDto.getAddressRequestDto());
 
 
         if (addressGet.isEmpty()) {

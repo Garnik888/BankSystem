@@ -5,6 +5,7 @@ import com.example.banksystem.domain.enum_types.CardStatus;
 import com.example.banksystem.domain.enum_types.CardType;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
 import java.util.Objects;
@@ -21,6 +22,7 @@ public class Card {
     @Column(name = "balance_type", nullable = false)
     private BalanceType balanceType;
     @Column(name = "balance", nullable = false)
+    @Min(10000)
     private String balance;
     @Column(name = "card_number", nullable = false, unique = true, length = 16)
     private String cardNumber;
@@ -33,12 +35,14 @@ public class Card {
     @Column(name = "pin", nullable = false, length = 4)
     private String PIN;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST,
+            CascadeType.REFRESH, CascadeType.MERGE})
     @JoinColumn(name = "id_issuer_branch", nullable = false,
             foreignKey = @ForeignKey(name = "issuer_branch_card_fk"))
     private IssuerBranch issuerBranch;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST,
+            CascadeType.REFRESH, CascadeType.MERGE})
     @JoinColumn(name = "id_card_holder", nullable = false,
             foreignKey = @ForeignKey(name = "card_holder_card_fk"))
     private CardHolder cardHolder;

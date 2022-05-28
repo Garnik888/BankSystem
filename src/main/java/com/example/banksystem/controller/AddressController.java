@@ -2,11 +2,7 @@ package com.example.banksystem.controller;
 
 import com.example.banksystem.domain.entity.Address;
 import com.example.banksystem.dto.request.AddressRequestDto;
-import com.example.banksystem.dto.request.CardHolderAddressRequestDto;
-import com.example.banksystem.dto.request.IssuerBranchRequestDto;
 import com.example.banksystem.dto.response.AddressResponseDto;
-import com.example.banksystem.dto.response.CardHolderAddressResponseDto;
-import com.example.banksystem.dto.response.IssuerBranchResponseDto;
 import com.example.banksystem.service.AddressService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,7 +73,7 @@ public class AddressController {
     @GetMapping
     public ResponseEntity<?> getAddressRequestDto(@RequestBody AddressRequestDto addressRequestDto) {
 
-        Optional<Address> address = addressService.getAddressRequestDto(addressRequestDto);
+        Optional<Address> address = addressService.getAddress(addressRequestDto);
 
         AddressResponseDto addressGet = modelMapper.map(address, AddressResponseDto.class);
 

@@ -19,14 +19,16 @@ public class CardHolder {
     @Column(name = "age", nullable = false)
     private Integer age;
 
-    @OneToMany(mappedBy = "cardHolder", cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
+    @OneToMany(mappedBy = "cardHolder", cascade = {CascadeType.PERSIST,
+            CascadeType.REFRESH, CascadeType.MERGE})
     private List<Card> cardList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "cardHolder", cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
+    @OneToMany(mappedBy = "cardHolder", cascade = {CascadeType.PERSIST,
+            CascadeType.REFRESH, CascadeType.MERGE})
     private List<Account> accountList = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY,
-            cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE})
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST,
+            CascadeType.REFRESH, CascadeType.MERGE})
     @JoinColumn(name = "address_id",foreignKey = @ForeignKey(name = "card_holder_address_fk"))
     private Address address;
 

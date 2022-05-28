@@ -63,12 +63,12 @@ public class AddressService {
         return null;
     }
 
-    public Optional<Address> getAddressRequestDto(AddressRequestDto addressRequestDto) {
+    public Optional<Address> getAddress(AddressRequestDto addressRequestDto) {
 
         Address addressGet = modelMapper.map(addressRequestDto, Address.class);
         Example<Address> example = Example.of(addressGet);
         Optional<Address> address = addressRepo.findOne(example);
 
-            return address;
+        return address;
     }
 }
